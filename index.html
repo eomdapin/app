@@ -61,6 +61,7 @@
       const [value, setValue] = React.useState('');
       const [errorMessage, setErrorMessage] = React.useState('');
 
+      // 한글 검증
       const hangul = text => /[가-힣|ㄱ-ㅎ|ㅏ-ㅣ]/.test(text);
 
       function handleInputChange(data) {
@@ -152,18 +153,31 @@
       const [counter, setCounter] = React.useState(() => {
         return jsonLocalStorage.getItem('counter');
       });
-      const [heartNumber, setHeartNumber] = React.useState('');
+      const [heartNumber, setHeartNumber] = React.useState(() => {
+        return jsonLocalStorage.getItem('heartNumber');
+      });
 
       const choiceFavorites = favorites.includes(mainFood);
 
+      // [handle] -----------------------------------------------------
       function updateCounter() {
         setCounter((pre) => {
+          console.log('pre : ', pre);
           const nextCounter = pre + 1;
+          console.log('nextCounter', nextCounter);
           jsonLocalStorage.setItem('counter', nextCounter);
           return nextCounter;
         });
 
-        setMainFood( mainFood == foodTwo ? foodThree : foodTwo );
+        setMainFood((pre) => {
+          if(pre == foodOne) {
+            return foodTwo;
+          } else if(pre == foodTwo) {
+            return foodThree;
+          } else if(pre == foodThree) {
+            return foodOne;
+          }
+        });
       }
       
       function handleHeartClick() {
@@ -172,8 +186,12 @@
           jsonLocalStorage.setItem('favorites', nextFavorites);
           return nextFavorites;
         });
-
-        setHeartNumber(Number(heartNumber) + 1);
+        
+        setHeartNumber((pre) => {
+          const nextHeartNumber = Number(pre) + 1;
+          jsonLocalStorage.setItem('heartNumber', nextHeartNumber);
+          return nextHeartNumber;
+        });
       }
 
       return (
