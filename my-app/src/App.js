@@ -69,7 +69,7 @@ const App = () => {
 
   return (
     <div>
-      <Title>[build] 페이지 {counter}</Title>
+      <Title>[component 분리] 페이지 {counter}</Title>
       <Form updateCounter={updateCounter} />
       <MainCard src={mainFood} alt="음식" handleHeartClick={handleHeartClick} heartNumber={heartNumber} choiceFavorites={choiceFavorites} />
       <Favorites favorites={favorites} />
